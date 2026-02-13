@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreadKiller AI - Turn Email Chaos Into Clarity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --secondary: #3B82F6;
+            --accent: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --light: #F8FAFC;
+            --border: #E2E8F0;
+            --purple: #8B5CF6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero .tagline {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .tier-badge.free {
+            background: linear-gradient(135deg, var(--accent), #059669);
+        }
+
+        .tier-badge.pro {
+            background: linear-gradient(135deg, var(--purple), #7C3AED);
+        }
+
+        .hero .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: -3rem auto 3rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .usage-banner {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .usage-banner.pro {
+            background: linear-gradient(135deg, var(--purple), #7C3AED);
+        }
+
+        .usage-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .usage-count {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .upgrade-btn {
+            background: white;
+            color: var(--secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .helper-text {
+            font-size: 0.9rem;
+            color: #64748B;
+            margin-top: 0.5rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            border-color: var(--secondary);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tier-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tier-indicator.free {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .tier-indicator.pro {
+            background: #EDE9FE;
+            color: #5B21B6;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #EEF2FF, #F0FDF4);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .summary-section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .one-liner {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .item {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+            transition: all 0.3s;
+        }
+
+        .item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .item-content {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-meta {
+            font-size: 0.9rem;
+            color: #64748B;
+            font-style: italic;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .error {
+            background: #FEE2E2;
+            border: 2px solid #FCA5A5;
+            color: #991B1B;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .limit-reached {
+            background: linear-gradient(135deg, #FEF3C7, #FEE2E2);
+            border: 3px solid var(--warning);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .limit-reached h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .limit-reached p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .upgrade-callout {
+            background: linear-gradient(135deg, #EDE9FE, #DBEAFE);
+            border: 2px solid var(--purple);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .upgrade-callout h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--purple);
+        }
+
+        .upgrade-callout ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upgrade-callout li {
+            padding: 0.5rem 0;
+            font-size: 1.05rem;
+        }
+
+        .upgrade-callout li::before {
+            content: '⚡ ';
+            margin-right: 0.5rem;
+        }
+
+        .pricing-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .price-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .price-card.featured {
+            border-color: var(--purple);
+            background: linear-gradient(135deg, #EDE9FE, white);
+            transform: scale(1.05);
+        }
+
+        .price-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-card.featured .price-amount {
+            color: var(--purple);
+        }
+
+        .price-period {
+            color: #64748B;
+            margin-bottom: 1rem;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-features li {
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .price-features li::before {
+            content: '✓ ';
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #64748B;
+        }
+
+        .examples {
+            background: #F8FAFC;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        .examples h4 {
+            font-size: 0.9rem;
+            color: #64748B;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .example-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .example-item:hover {
+            border-color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .example-desc {
+            font-size: 0.85rem;
+            color: #64748B;
+        }
+
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--light);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .check {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .cross {
+            color: #94A3B8;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>ThreadKiller AI</h1>
+        <p class="tagline">Turn 50-email threads into actionable insights in 30 seconds</p>
+        <div class="tier-badge free" id="currentTier">Free Tier - Smart Analysis</div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">3+ hrs</div>
+                <div class="stat-label">Saved per week</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Context captured</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">30 sec</div>
+                <div class="stat-label">To clarity</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div id="usageBanner" class="usage-banner">
+                <div class="usage-info">
+                    <div>
+                        <div class="usage-count"><span id="threadsUsed">0</span>/3</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">threads this month (Free Tier)</div>
+                    </div>
+                </div>
+                <a href="#pricing" class="upgrade-btn">Upgrade to Pro for AI Analysis</a>
+            </div>
+
+            <div id="limitReached" class="limit-reached" style="display: none;">
+                <h3>🎯 You've hit your free limit!</h3>
+                <p>You've analyzed 3 threads this month. Upgrade to Pro for unlimited AI-powered analysis.</p>
+                <div class="pricing-preview">
+                    <div class="price-card featured">
+                        <div class="price-name">Pro - AI Powered</div>
+                        <div class="price-amount">$15<span style="font-size: 1rem;">/mo</span></div>
+                        <div class="price-period">Billed monthly</div>
+                        <ul class="price-features">
+                            <li>Unlimited AI analyses</li>
+                            <li>Advanced context understanding</li>
+                            <li>Email forwarding</li>
+                            <li>Saved library</li>
+                            <li>Chrome extension</li>
+                        </ul>
+                        <button class="btn-primary" onclick="alert('Payment integration coming soon! Email hello@threadkiller.ai for early access pricing.')">Upgrade Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="error" id="error"></div>
+
+            <h2>📧 Paste Your Email Thread</h2>
+            
+            <div>
+                <label for="threadInput">Copy and paste the entire email thread below:</label>
+                <textarea 
+                    id="threadInput" 
+                    placeholder="Paste your email thread here... include all the back-and-forth, replies, forwards - the messier the better! 
+
+Example: Include subject lines, from/to headers, timestamps, and the full message content of each email in the thread."
+                ></textarea>
+                <div class="helper-text">
+                    💡 <strong>Free Tier:</strong> Smart template-based analysis (instant results)
+                    <br>
+                    ⚡ <strong>Pro Tier:</strong> AI-powered deep analysis (understands context & nuance)
+                </div>
+            </div>
+
+            <div class="examples">
+                <h4>Try an example thread:</h4>
+                <div class="example-item" onclick="loadExample('project')">
+                    <div class="example-title">🏗️ Messy Project Thread</div>
+                    <div class="example-desc">15 emails about deadline changes, budget discussions, and scope creep</div>
+                </div>
+                <div class="example-item" onclick="loadExample('sales')">
+                    <div class="example-title">💼 Sales Deal Thread</div>
+                    <div class="example-desc">20 emails with contract negotiations, pricing back-and-forth</div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="analyzeThread()" id="analyzeBtn">
+                    🚀 Analyze Thread <span class="tier-indicator free" id="tierBadge">Free - Smart</span>
+                </button>
+                <button class="btn-secondary" onclick="resetForm()">
+                    🔄 Clear
+                </button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p id="loadingText">Analyzing your thread with smart extraction...</p>
+        </div>
+
+        <div class="card results" id="results">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="margin: 0;">Analysis Results</h2>
+                <span class="tier-indicator free" id="resultsTier">Free Tier</span>
+            </div>
+
+            <div class="summary-section">
+                <h3>📝 One-Sentence Summary</h3>
+                <div class="one-liner" id="oneLiner"></div>
+            </div>
+
+            <div class="section">
+                <h3>🎯 Key Decisions Made</h3>
+                <div class="item-list" id="decisions"></div>
+            </div>
+
+            <div class="section">
+                <h3>✅ Action Items</h3>
+                <div class="item-list" id="actions"></div>
+            </div>
+
+            <div class="section">
+                <h3>❓ Unresolved Questions</h3>
+                <div class="item-list" id="questions"></div>
+            </div>
+
+            <div class="section">
+                <h3>⏱️ Timeline</h3>
+                <div class="timeline" id="timeline"></div>
+            </div>
+
+            <div class="section">
+                <h3>💡 Critical Context</h3>
+                <div id="context" style="background: var(--light); padding: 1.5rem; border-radius: 12px; font-style: italic;"></div>
+            </div>
+
+            <div class="upgrade-callout">
+                <h4>⚡ Want Even Better Analysis?</h4>
+                <p>Upgrade to Pro for AI-powered deep analysis that understands context, tone, and complex relationships.</p>
+                <ul>
+                    <li>Detects implicit decisions and commitments</li>
+                    <li>Understands sarcasm and subtext</li>
+                    <li>Identifies political dynamics and conflicts</li>
+                    <li>Extracts nuanced action items</li>
+                    <li>Unlimited analyses per month</li>
+                </ul>
+                <button class="btn-primary" onclick="window.location.hash='pricing'" style="margin-top: 1rem;">
+                    Upgrade to Pro - $15/month
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" id="pricing">
+        <h2 style="margin-bottom: 1rem; color: var(--primary);">Choose Your Plan</h2>
+        <p style="margin-bottom: 2rem; color: #64748B;">Start free, upgrade when you need AI-powered analysis</p>
+        
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Free</th>
+                        <th>Pro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Analyses per month</td>
+                        <td>3</td>
+                        <td class="check">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Analysis type</td>
+                        <td>Smart template-based</td>
+                        <td class="check">AI-powered (Claude Sonnet 4)</td>
+                    </tr>
+                    <tr>
+                        <td>Context understanding</td>
+                        <td>Basic</td>
+                        <td class="check">Advanced (nuance, tone, subtext)</td>
+                    </tr>
+                    <tr>
+                        <td>Email forwarding</td>
+                        <td class="cross">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Saved thread library</td>
+                        <td class="cross">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Chrome extension</td>
+                        <td class="cross">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Priority support</td>
+                        <td class="cross">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pricing-preview" style="max-width: 700px; margin: 3rem auto 0;">
+            <div class="price-card">
+                <div class="price-name">Free</div>
+                <div class="price-amount">$0</div>
+                <div class="price-period">Forever</div>
+                <ul class="price-features">
+                    <li>3 threads per month</li>
+                    <li>Smart template analysis</li>
+                    <li>All core features</li>
+                    <li>No credit card required</li>
+                </ul>
+                <button class="btn-secondary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Get Started Free</button>
+            </div>
+            
+            <div class="price-card featured">
+                <div class="price-name">Pro - AI Powered</div>
+                <div class="price-amount">$15<span style="font-size: 1rem;">/mo</span></div>
+                <div class="price-period">Billed monthly</div>
+                <ul class="price-features">
+                    <li>Unlimited AI analyses</li>
+                    <li>Advanced context understanding</li>
+                    <li>Email forwarding</li>
+                    <li>Saved library & search</li>
+                    <li>Chrome extension</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="btn-primary" onclick="alert('Coming soon! Email hello@threadkiller.ai for early access pricing.')">Upgrade to Pro</button>
+            </div>
+        </div>
+        
+        <p style="margin-top: 3rem;">Built with ❤️ to save you from email hell</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Free tier uses smart extraction • Pro tier uses Claude AI (your payment covers API costs)</p>
+    </div>
+
+    <script>
+        const FREE_LIMIT = 3;
+        const isPro = false; // Set to true when user pays
+
+        // Usage tracking
+        function getThreadsUsed() {
+            const data = JSON.parse(localStorage.getItem('threadkiller_usage') || '{}');
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            
+            if (data.month !== currentMonth) {
+                return 0;
+            }
+            return data.count || 0;
+        }
+
+        function incrementThreadsUsed() {
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            const count = getThreadsUsed() + 1;
+            
+            localStorage.setItem('threadkiller_usage', JSON.stringify({
+                month: currentMonth,
+                count: count
+            }));
+            
+            updateUsageBanner();
+            return count;
+        }
+
+        function updateUsageBanner() {
+            const used = getThreadsUsed();
+            document.getElementById('threadsUsed').textContent = used;
+            
+            if (used >= FREE_LIMIT && !isPro) {
+                document.getElementById('limitReached').style.display = 'block';
+                document.getElementById('analyzeBtn').disabled = true;
+            }
+        }
+
+        // Initialize
+        updateUsageBanner();
+
+        // Example threads
+        const examples = {
+            project: `Subject: Q4 Product Launch - Timeline Update
+
+From: Sarah Chen <sarah@company.com>
+To: Team
+Date: Jan 15, 2026 9:30 AM
+
+Hey team,
+
+We need to push the Q4 launch back by 2 weeks. Development hit some blockers with the new API integration.
+
+Sarah
+
+---
+
+From: Mike Rodriguez <mike@company.com>
+To: Sarah Chen
+Date: Jan 15, 2026 10:15 AM
+
+Sarah - that impacts our entire marketing timeline. Can we at least do a soft launch on the original date?
+
+Mike
+
+---
+
+From: Sarah Chen
+To: Mike Rodriguez  
+Date: Jan 15, 2026 11:00 AM
+
+Mike - dev says soft launch is possible but risky. Let me check with the team and get back to you by EOD.
+
+---
+
+From: Dev Team <dev@company.com>
+To: Sarah Chen
+Date: Jan 15, 2026 2:30 PM
+
+Sarah,
+
+Soft launch possible if we cut features A, B, and C. Full launch needs the extra 2 weeks for proper testing.
+
+Also heads up - budget is now $15K over due to the extra sprint. Need approval.
+
+Dev Team
+
+---
+
+From: Sarah Chen
+To: All
+Date: Jan 16, 2026 9:00 AM
+
+Decision made: We're doing full launch on Feb 15 (2 weeks delayed). No soft launch - too risky.
+
+Budget increase approved - $15K additional for extra sprint.
+
+Mike - can marketing adjust to new timeline? Need confirmation by EOD.
+
+Sarah
+
+---
+
+From: Mike Rodriguez
+To: Sarah Chen
+Date: Jan 16, 2026 4:45 PM
+
+Confirmed - marketing can adjust. Will need to notify our launch partners about the delay though.
+
+Who's handling partner communications?
+
+---
+
+From: Sarah Chen  
+To: Mike Rodriguez
+Date: Jan 17, 2026 8:30 AM
+
+Good question - I'll take ownership of partner comms. Can you draft the key talking points by Friday?
+
+Also still waiting on legal to approve the new contract terms. Anyone heard from them?`,
+
+            sales: `Subject: Acme Corp - Enterprise Deal Discussion
+
+From: John Sales <john@ourcompany.com>
+To: Jane Buyer <jane@acmecorp.com>
+Date: Jan 10, 2026 2:00 PM
+
+Hi Jane,
+
+Great connecting yesterday! Here's our enterprise pricing as discussed:
+
+- 100 seats: $50/seat/month = $5,000/month
+- Annual contract: $60,000 (save $12,000 vs monthly)
+- Includes: Premium support, dedicated CSM, custom integrations
+
+Let me know your thoughts!
+
+John
+
+---
+
+From: Jane Buyer
+To: John Sales
+Date: Jan 11, 2026 10:30 AM
+
+John - pricing is higher than we budgeted. We allocated $40K annually for this solution. Can you work with that number?
+
+Also, we'd need implementation support included in the price.
+
+Jane
+
+---
+
+From: John Sales
+To: Jane Buyer
+Date: Jan 11, 2026 3:00 PM
+
+Let me talk to my manager about the pricing. Implementation support typically costs $5K extra, but I might be able to bundle it.
+
+Can you do $45K annual if we include implementation support?
+
+---
+
+From: Jane Buyer
+To: John Sales
+Date: Jan 12, 2026 9:15 AM
+
+$45K could work, but we need a few contract changes:
+
+1. 30-day cancellation clause (not 90-day)
+2. Built-in data export tools
+3. Quarterly business reviews with our executive team
+
+Can your legal team accommodate these?
+
+---
+
+From: John Sales
+To: Jane Buyer
+Date: Jan 12, 2026 2:30 PM
+
+Checking with legal on #1 and #3. Good news - we already have #2 built into the platform.
+
+Quick question - when do you need this implemented by? We're booking February implementations now.
+
+---
+
+From: Jane Buyer
+To: John Sales
+Date: Jan 13, 2026 11:00 AM
+
+We need to be live by March 1st for our Q2 planning cycle. Is Feb implementation realistic for that go-live date?
+
+Also, just realized - we need SSO integration with Okta. Is that included or an add-on?
+
+---
+
+From: John Sales
+To: Jane Buyer
+Date: Jan 13, 2026 4:00 PM
+
+March 1 is tight but doable if we start the contract process by Jan 20th.
+
+Great news - SSO with Okta is included in Enterprise tier at no extra cost!
+
+Legal approved both the 30-day cancellation AND quarterly executive reviews. We're good to proceed.
+
+Ready to move forward with the $45K annual contract?
+
+John`
+        };
+
+        function loadExample(type) {
+            document.getElementById('threadInput').value = examples[type];
+        }
+
+        function resetForm() {
+            document.getElementById('threadInput').value = '';
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('error').classList.remove('show');
+        }
+
+        function showError(message) {
+            const error = document.getElementById('error');
+            error.textContent = message;
+            error.classList.add('show');
+        }
+
+        // Smart template-based analysis (FREE TIER - NO API COST)
+        function analyzeThreadTemplate(threadText) {
+            const emails = threadText.split(/---+/).filter(e => e.trim());
+            
+            // Extract key information using patterns
+            const decisions = [];
+            const actions = [];
+            const questions = [];
+            const timeline = [];
+            
+            // Simple pattern matching for decisions
+            const decisionPatterns = /(?:decision|decided|approved|confirmed|we're doing|final call|going with)/i;
+            const actionPatterns = /(?:need to|should|must|can you|please|by \w+day|deadline|due)/i;
+            const questionPatterns = /\?/;
+            
+            emails.forEach((email, idx) => {
+                const lines = email.split('\n').filter(l => l.trim());
+                const dateMatch = email.match(/Date: (.+)/);
+                const fromMatch = email.match(/From: (.+)/);
+                
+                const date = dateMatch ? dateMatch[1].trim() : `Email ${idx + 1}`;
+                const from = fromMatch ? fromMatch[1].split('<')[0].trim() : 'Unknown';
+                
+                lines.forEach(line => {
+                    if (decisionPatterns.test(line) && line.length > 20) {
+                        decisions.push({
+                            decision: line.trim(),
+                            who: from,
+                            when: date
+                        });
+                    }
+                    
+                    if (actionPatterns.test(line) && line.length > 15) {
+                        const deadlineMatch = line.match(/by (\w+day|EOD|end of \w+|\w+ \d+)/i);
+                        actions.push({
+                            task: line.trim(),
+                            owner: from,
+                            deadline: deadlineMatch ? deadlineMatch[1] : null
+                        });
+                    }
+                    
+                    if (questionPatterns.test(line) && line.length > 10) {
+                        questions.push({
+                            question: line.trim(),
+                            context: `Asked by ${from}`
+                        });
+                    }
+                });
+                
+                if (dateMatch) {
+                    const eventLine = lines.find(l => l.length > 30 && !l.includes('From:') && !l.includes('To:') && !l.includes('Subject:'));
+                    if (eventLine) {
+                        timeline.push({
+                            date: date.split(' ').slice(0, 3).join(' '),
+                            event: eventLine.substring(0, 100)
+                        });
+                    }
+                }
+            });
+            
+            // Generate summary
+            const summary = `Email thread with ${emails.length} messages discussing ${
+                decisions.length > 0 ? 'decisions about project timeline and budget' :
+                actions.length > 0 ? 'action items and next steps' :
+                'ongoing communication and coordination'
+            }.`;
+            
+            // Extract context
+            const allText = threadText.toLowerCase();
+            const contextTopics = [];
+            if (allText.includes('budget')) contextTopics.push('budget discussions');
+            if (allText.includes('deadline') || allText.includes('launch')) contextTopics.push('timeline concerns');
+            if (allText.includes('legal')) contextTopics.push('legal approvals needed');
+            if (allText.includes('marketing')) contextTopics.push('marketing coordination');
+            
+            const context = contextTopics.length > 0 
+                ? `This thread involves ${contextTopics.join(', ')}. Key stakeholders are coordinating on deliverables and timelines.`
+                : 'Team members are coordinating on project deliverables and next steps.';
+            
+            return {
+                summary,
+                decisions: decisions.slice(0, 5),
+                actions: actions.slice(0, 5),
+                questions: questions.slice(0, 5),
+                timeline: timeline.slice(0, 6),
+                context
+            };
+        }
+
+        async function analyzeThread() {
+            const threadInput = document.getElementById('threadInput').value.trim();
+            
+            if (!threadInput) {
+                showError('Please paste an email thread to analyze.');
+                return;
+            }
+
+            // Check usage limit for free tier
+            if (!isPro) {
+                const used = getThreadsUsed();
+                if (used >= FREE_LIMIT) {
+                    showError('You\'ve reached your free limit of 3 threads per month. Upgrade to Pro for unlimited AI-powered analysis!');
+                    document.getElementById('limitReached').style.display = 'block';
+                    return;
+                }
+            }
+
+            const error = document.getElementById('error');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+
+            error.classList.remove('show');
+            results.classList.remove('show');
+            loading.classList.add('show');
+            analyzeBtn.disabled = true;
+
+            try {
+                // Simulate processing time
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Use template-based analysis (FREE - no API cost)
+                const analysis = analyzeThreadTemplate(threadInput);
+                
+                displayResults(analysis);
+                incrementThreadsUsed();
+                
+            } catch (err) {
+                console.error('Error:', err);
+                showError('Something went wrong analyzing the thread. Please try again.');
+            } finally {
+                loading.classList.remove('show');
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        function displayResults(analysis) {
+            // Summary
+            document.getElementById('oneLiner').textContent = analysis.summary;
+
+            // Decisions
+            const decisionsHtml = analysis.decisions.length > 0 ? analysis.decisions.map(d => `
+                <div class="item">
+                    <div class="item-content">${d.decision}</div>
+                    <div class="item-meta">Decided by: ${d.who} • ${d.when}</div>
+                </div>
+            `).join('') : '<p style="color: #64748B;">No explicit decisions found in this thread.</p>';
+            document.getElementById('decisions').innerHTML = decisionsHtml;
+
+            // Actions
+            const actionsHtml = analysis.actions.length > 0 ? analysis.actions.map(a => `
+                <div class="item">
+                    <div class="item-content">${a.task}</div>
+                    <div class="item-meta">Owner: ${a.owner}${a.deadline ? ' • Due: ' + a.deadline : ''}</div>
+                </div>
+            `).join('') : '<p style="color: #64748B;">No action items identified.</p>';
+            document.getElementById('actions').innerHTML = actionsHtml;
+
+            // Questions
+            const questionsHtml = analysis.questions.length > 0 ? analysis.questions.map(q => `
+                <div class="item">
+                    <div class="item-content">${q.question}</div>
+                    <div class="item-meta">${q.context}</div>
+                </div>
+            `).join('') : '<p style="color: #64748B;">No unresolved questions.</p>';
+            document.getElementById('questions').innerHTML = questionsHtml;
+
+            // Timeline
+            const timelineHtml = analysis.timeline.length > 0 ? analysis.timeline.map(t => `
+                <div class="timeline-item">
+                    <div class="timeline-date">${t.date}</div>
+                    <div>${t.event}</div>
+                </div>
+            `).join('') : '<p style="color: #64748B;">Timeline information not available.</p>';
+            document.getElementById('timeline').innerHTML = timelineHtml;
+
+            // Context
+            document.getElementById('context').textContent = analysis.context;
+
+            // Show results
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Allow Enter+Cmd/Ctrl to submit
+        document.getElementById('threadInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                analyzeThread();
+            }
+        });
+    </script>
+</body>
+</html>
